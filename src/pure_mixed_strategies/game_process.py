@@ -41,5 +41,5 @@ def game_process():
             effect = calculate_difference(matrix, input_arr[0], input_arr[1])
             total_effect += effect
             print(f"Эффективность за шаг {i+1}: {int(effect/(i+1))} % и общий результат {int(total_effect/(i+1))} %")
-
+    # Для удобства перевода на код для Ardruino, сделать return total_effect
     print(f"Результативная эффективность выбора: {total_effect/num_rounds}")
