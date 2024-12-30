@@ -1,56 +1,51 @@
-def game_process(matrix, num_rows=None, num_cols=None, num_moves=3, default_row=None, default_col=None):
-    # Заполнение значений по умолчанию
-    if num_rows == None:
-        num_rows = len(matrix)
-    if num_cols == None:
-        num_cols = len(matrix[0])
-        for i in range(num_rows):
-            if len(matrix[i]) != num_cols:
-                raise ValueError("The matrix has different row sizes")
-    if default_row == None:
-        default_row = num_rows//2
-    if default_col == None:
-        default_col = num_cols//2
-    
-    if num_rows == 0 or num_cols == 0:
-        raise ValueError("The matrix cannot be empty")
+import random
+from matrix_handler import *
 
-    # Проверка значений, выставленных не по умолчанию
-    if default_row >= num_rows or 0 > default_row:
-        raise ValueError("Incorrect default row")
-    if default_col >= num_cols or 0 > default_col:
-        raise ValueError("Incorrect default column")
+
+def random_binary(p):
+    """Задаем выбор в зависимости от вероятности"""
+    if p > 1 or p < 0:
+        raise ValueError
+    return 1 if random.random() < p else 0 
+
+
+def one_round(input_p, matrix):
+    """Выбор элемента в зависимости от вероятности"""
+    pA, pB = input_p
+    return matrix[random_binary(pA)][random_binary(pB)] # Элемент матрицы за раунд
+
+
+def game_process(matrix, num_moves=3):
+    if len(matrix) != 2:
+        raise ValueError("Incorrect column length")
+    if len(matrix[0]) != 2:
+        raise ValueError("Incorrect row length")
+
+    saddle_point = find_saddle_point(matrix)
+    if saddle_point != None:
+        saddle_point_row_index, saddle_point_column_index, saddle_point = saddle_point
+            
+    game_sum = 0
+    total_effect = 0
     
-    # Берём значения из матрицы num_moves раз
-    row = default_row
-    col = default_col
-    print(f"Row {row} and column {col} are selected (count starting from 0)")
-    result_choises = []
     for _ in range(num_moves):
-        # Пока не будет введено 'send' предоставляем выбор игрокам \
-        # в любом порядке и количестве раз
-        while True:
-            print("Input 'send' or '{num_player}:{player_line_number (index row or column)}'")
-            print("(rows - for player '1', columns - for player '2') Example: 2:0")
-            data = input("Your input: ").strip()
-            if data == "send":
-                break
-            parts = data.split(':')
-            if len(parts) == 2:
-                num_player, player_line_number = parts
-                if player_line_number.isdigit():
-                    if num_player == "1":
-                        row = int(player_line_number)
-                        print(f"Row {row} and column {col} are selected")
-                    elif num_player == "2":
-                        col = int(player_line_number)
-                        print(f"Row {row} and column {col} are selected")
-                    else:
-                        print("Missed 'num_player'")
-                else:
-                    print("Missed 'player_line_number'")
-            else:
-                print("Missed ':'")
-        result_choises.append(matrix[row][col])
-    
-    return result_choises
+        fst_row_probability, fst_column_probability, *_ = [
+            float(i) for i in input("Enter two probabilities separated by a space: ").strip().split()
+        ]
+        game_sum += one_round([fst_row_probability, fst_column_probability], matrix)
+        
+        # Задаём значения, которые должны были получится для идеальной стратегии
+        if saddle_point:
+            ideal_row_probability, ideal_column_probability = saddle_point_row_index, saddle_point_column_index
+        else:
+            ideal_row_probability, ideal_column_probability = ideal_probabilities_for_mixed_strategy(matrix)
+        
+        effect = probability_selection_efficiency(
+            ideal_row_probability, ideal_column_probability, fst_row_probability, fst_column_probability
+        )
+        
+        print("Effect:", effect, "|", "Score:", game_sum)
+        total_effect += effect
+        
+    total_effect = round(total_effect / num_moves, 2)
+    return game_sum, total_effect

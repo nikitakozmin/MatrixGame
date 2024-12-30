@@ -1,7 +1,8 @@
 import random
 
+
 # Создание матрицы с гарантированной седловой точкой
-def create_matrix_with_saddle_point(rows=3, cols=3, min_num=-99, max_num=99):
+def create_matrix_with_saddle_point(rows=2, cols=2, min_num=-99, max_num=99):
     # Создаём случайную матрицу
     matrix = [[random.randint(min_num, max_num) for i in range(cols)] for i in range(rows)]
 
@@ -18,19 +19,18 @@ def create_matrix_with_saddle_point(rows=3, cols=3, min_num=-99, max_num=99):
 
     return matrix
 
-# Поиск седловой точки
-def find_saddle_point(matrix):
-    rows = len(matrix)
-    cols = len(matrix[0])
 
+def create_matrix_for_game(rows=2, cols=2, min_num=-99, max_num=99):
+    """Создание матрицы, в которой седловых точек не больше одной"""
+    row_values = [set() for _ in range(rows)]
+    col_values = [set() for _ in range(cols)]
+    matrix = [[0 for _ in range(cols)] for  _ in range(rows)]
     for i in range(rows):
-        # Находим минимальный элемент строки и его индекс
-        row_min = min(matrix[i])
-        col_idx = matrix[i].index(row_min)
-
-        # Проверяем, является ли он максимальным в столбце
-        col_max = max(matrix[j][col_idx] for j in range(rows))
-        if row_min == col_max:
-            return (i, col_idx, row_min)  # Возвращаем: индекс строки, индекс столбца, значение
-
-    return None  # Если седловой точки нет
+        for j in range(cols):
+            new_value = random.randint(min_num, max_num)
+            while new_value in row_values[i] or new_value in col_values[j]:
+                new_value = random.randint(min_num, max_num)
+            row_values[i].add(new_value)
+            col_values[j].add(new_value)
+            matrix[i][j] = new_value
+    return matrix
