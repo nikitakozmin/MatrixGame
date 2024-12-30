@@ -44,8 +44,8 @@ def game_process(matrix, num_moves=3):
             ideal_row_probability, ideal_column_probability, fst_row_probability, fst_column_probability
         )
         
-        print("Effect:", effect, "|", "Score:", game_sum)
+        print("Effect:", str(effect)+'%', "|", "Score:", game_sum)
         total_effect += effect
         
-    total_effect = round(total_effect / num_moves, 2)
+    total_effect = int(round(total_effect / num_moves, 2))
     return game_sum, total_effect

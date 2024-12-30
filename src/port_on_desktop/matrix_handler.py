@@ -28,4 +28,4 @@ def ideal_probabilities_for_mixed_strategy(matrix):
 
 
 def probability_selection_efficiency(fst_expected_value, snd_expected_value, fst_real_value, snd_real_value):
-    return round((1-abs(fst_expected_value - fst_real_value) + 1-abs(snd_expected_value - snd_real_value)) / 2, 2)*100
+    return int(round((1-abs(fst_expected_value - fst_real_value) + 1-abs(snd_expected_value - snd_real_value)) / 2, 2)*100)
