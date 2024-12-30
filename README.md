@@ -9,8 +9,8 @@
 ![Макет Ardruino](layout.jpg)
 
 ## Ресурсы (src)
-### :card_index_dividers:/ardruino
-Код выполненный на Ардруино
+### :card_index_dividers:src/ardruino
+Код выполненный на Ардруино для сборки собственной модели в жизни или в эмуляторе
 
 ### :card_index_dividers:src/port_on_desktop
 Реализация матричной игры, при которой вместо таймера игроки отправляют результаты выборов по кнопке
