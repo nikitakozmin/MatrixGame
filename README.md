@@ -9,7 +9,7 @@
 ![Макет Ardruino](layout.jpg)
 
 ## Ресурсы (src)
-### :card_index_dividers:/ardruino
+### :card_index_dividers:src/ardruino
 Код выполненный на Ардруино
 
 ### :card_index_dividers:src/port_on_desktop
