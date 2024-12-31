@@ -10,6 +10,11 @@
 extern OLED myOLED;
 
 int matrix[2][2];
+//ищем седловую точку 
+int saddleRow;
+int saddleCol;
+int saddleValue;
+bool saddlePoint;
 
 void setup()
 {
@@ -19,6 +24,10 @@ void setup()
   visualization_line(); // визуализируем стоблцы, строки и подписи
   create_matrix_for_game(matrix); // создаем матрицу
   visualization_matrix(matrix); // визуализируем матрицу
+  
+  
+  saddlePoint = findSaddlePoint(matrix, saddleRow, saddleCol, saddleValue);
+
   myOLED.update();
 }
 
@@ -27,20 +36,10 @@ int total_effect = 0; // итоговый эффект
 int counter_steps = 0; // счетчик раундов
 int num_round = 5; // количество раундов
 
-//ищем седловую точку 
-int saddleRow;
-int saddleCol;
-int saddleValue;
-bool saddlePoint = findSaddlePoint(matrix, saddleRow, saddleCol, saddleValue);
 
 // игровой процесс
 void game_process(){
   delay(5000); // задержка 5 секунд
-  
-  float pA = analogRead(A2)/float(1024); // подаваемые вероятности с потенциометров
-  float pB = analogRead(A7)/float(1024);
-  float ideal_row_probability = 0.0; // создаем переменные для идеальных вероятностей
-  float ideal_column_probability = 0.0;
   
   if (counter_steps == num_round){
     total_effect = total_effect/num_round;
@@ -48,6 +47,11 @@ void game_process(){
     while(true){
     }
   }
+
+  float pA = analogRead(A2)/float(1024); // подаваемые вероятности с потенциометров
+  float pB = analogRead(A7)/float(1024);
+  float ideal_row_probability = 0.0; // создаем переменные для идеальных вероятностей
+  float ideal_column_probability = 0.0;
   
   // счет
   game_sum = game_sum + one_round(pA, pB, matrix); 
