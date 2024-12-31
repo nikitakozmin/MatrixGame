@@ -53,7 +53,7 @@ void game_process(){
   game_sum = game_sum + one_round(pA, pB, matrix); 
   
   //задаем значения которые должны были получится для идеальной стратегии
-  if(saddleValue){
+  if(saddlePoint){
     ideal_row_probability = saddleRow;
     ideal_column_probability = saddleCol;
   }else{
