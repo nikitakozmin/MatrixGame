@@ -20,15 +20,12 @@ void setup()
 {
   pinMode(A2, INPUT);
   pinMode(A7, INPUT);
-  myOLED.begin();
+  start_vis();
   visualization_line(); // визуализируем стоблцы, строки и подписи
   create_matrix_for_game(matrix); // создаем матрицу
   visualization_matrix(matrix); // визуализируем матрицу
-  
-  
   saddlePoint = findSaddlePoint(matrix, saddleRow, saddleCol, saddleValue);
-
-  myOLED.update();
+  update_vis();
 }
 
 int game_sum = 0; // игровой счет
@@ -75,14 +72,14 @@ void game_process(){
   clear_effect(); // чистим область для эффекта
   print_effect(effect); // визуализация эффекта
   counter_steps++; //счетчик раундов
-  myOLED.update();
+  update_vis();
 }
 
 // конец игры
 void end_game(){
   clear_effect();
   print_effect(total_effect, 1);
-  myOLED.update();
+  update_vis();
 }
 
 void loop()
