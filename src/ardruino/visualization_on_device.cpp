@@ -97,3 +97,11 @@ void print_effect(int effect, int flag=0){
     myOLED.print(String(effect), effect_x,effect_y); 
   }
 }
+
+void start_vis(){
+  myOLED.begin();
+}
+
+void update_vis(){
+  myOLED.update();
+}
