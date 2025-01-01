@@ -16,4 +16,8 @@ void clear_effect();
 
 void print_effect(int effect, int flag=0);
 
+void start_vis();
+
+void update_vis();
+
 #endif //VISUALIZATION_ON_DEVICE_H
