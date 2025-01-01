@@ -59,32 +59,31 @@ int probability_selection_efficiency(float fst_expected_value, float snd_expecte
 
 
 void create_matrix_for_game(int matrix[2][2], int rows = 2, int cols = 2, int min_num = -99, int max_num = 99) {
-  randomSeed(analogRead(A0));  // Инициализация генератора случайных чисел с использованием аналогового входа
-
-  // Перемешивание чисел и заполнение каждой строки уникальными значениями
-  for (int i = 0; i < rows; i++) {
-    // Создаем массив всех возможных чисел в пределах диапазона для текущей строки
-    int num_elements = max_num - min_num + 1;
-    int all_numbers[200];  // Делаем массив фиксированного размера (достаточно для диапазона от -99 до 99)
-
-    // Заполняем массив всеми числами от min_num до max_num
-    for (int n = 0; n < num_elements; n++) {
-      all_numbers[n] = min_num + n;
+    // Инициализация случайного генератора с использованием аналогового пина для генерации случайных чисел
+    randomSeed(analogRead(A0));
+    
+    // Массивы для отслеживания уникальных значений в строках и столбцах
+    bool rowValues[2][max_num - min_num + 1] = {false};  // Массив для строк (максимальное количество уникальных значений)
+    bool colValues[2][max_num - min_num + 1] = {false};  // Массив для столбцов (максимальное количество уникальных значений)
+    
+    // Перебор всех ячеек матрицы
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            int newValue;
+            
+            // Генерация уникального значения для ячейки
+            do {
+                newValue = random(min_num, max_num + 1); // Случайное число от min_num до max_num
+            } while (rowValues[i][newValue - min_num] || colValues[j][newValue - min_num]);
+    
+            // Заполнение матрицы новым значением
+            matrix[i][j] = newValue;
+    
+            // Обновление флагов для строк и столбцов
+            rowValues[i][newValue - min_num] = true;
+            colValues[j][newValue - min_num] = true;
+        }
     }
-
-    // Перемешиваем этот массив
-    for (int j = num_elements - 1; j > 0; j--) {
-      int k = random(j + 1);  // Генерация случайного индекса
-      int temp = all_numbers[j];
-      all_numbers[j] = all_numbers[k];
-      all_numbers[k] = temp;
-    }
-
-    // Заполняем текущую строку матрицы уникальными числами
-    for (int j = 0; j < cols; j++) {
-      matrix[i][j] = all_numbers[j]; // Используем первые 'cols' чисел после перемешивания
-    }
-  }
 }
 
 //функция для поиска седловой точки
