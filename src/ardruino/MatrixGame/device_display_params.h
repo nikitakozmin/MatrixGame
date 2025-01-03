@@ -29,4 +29,4 @@ const int effect_x = 92;
 const int effect_y = 45;
 
 
-#endif  DEVICE_DISPLAY_PARAMS_H
+#endif 
