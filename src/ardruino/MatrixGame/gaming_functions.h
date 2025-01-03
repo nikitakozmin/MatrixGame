@@ -31,4 +31,4 @@ void create_matrix_for_game(int matrix[2][2], int rows = 2, int cols = 2, int mi
 //функция для поиска седловой точки
 bool findSaddlePoint(int matrix[2][2], int& saddleRow, int& saddleCol, int& saddleValue);
 
-#endif GAMING_FUNCTIONS_H
+#endif
