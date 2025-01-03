@@ -10,7 +10,7 @@ const uint8_t *smallFont = u8g2_font_5x8_mr;  // Маленький шрифт
 const uint8_t *mediumFont = u8g2_font_crox2h_tn;  // Средний шрифт
 const uint8_t *bigFont = u8g2_font_helvR18_tf;  // Большой шрифт
 
-void visualization(){
+void initial_visualization(){
   u8g2.setFont(smallFont); 
   for (int i = 0; i < 14; i++) {
     u8g2.setCursor(i * 6, horiz_matrix_line_y);
