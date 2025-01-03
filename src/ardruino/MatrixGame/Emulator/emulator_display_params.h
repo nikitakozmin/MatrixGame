@@ -1,5 +1,3 @@
-// display_params.h
-
 #ifndef DISPLAY_PARAMS_H
 #define DISPLAY_PARAMS_H
 
@@ -27,7 +25,7 @@ const int second_num_x = 49;
 const int percent_y = 55;
 const int percent_x = 120;
 
-const int area_score_numbers_x1 = 92;
+const int area_score_numbers_x1 = 87;
 const int area_score_numbers_x2 = 128;
 const int area_score_numbers_y1 = 9;
 const int area_score_numbers_y2 = 25;
@@ -47,4 +45,4 @@ const int minus_effect_y = 57;
 const int effect_x = 95;
 const int effect_y = 55;
 
-#endif  // DISPLAY_PARAMS_H
+#endif  
