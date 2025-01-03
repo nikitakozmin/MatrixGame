@@ -1,5 +1,5 @@
 #include "visualization_on_wokwi.h"
-#include "display_params.h"
+#include "emulator_display_params.h"
 #include <U8g2lib.h>
 
 // Инициализация для дисплея 128x64
