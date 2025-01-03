@@ -17,4 +17,4 @@ void start_vis();
 
 void update_vis();
 
-#endif VISUALIZATION_H
+#endif
