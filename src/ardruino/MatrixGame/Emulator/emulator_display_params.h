@@ -45,4 +45,4 @@ const int minus_effect_y = 57;
 const int effect_x = 95;
 const int effect_y = 55;
 
-#endif  
+#endif
