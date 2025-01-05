@@ -6,7 +6,10 @@ def random_binary(p):
     """Задаем выбор в зависимости от вероятности"""
     if p > 1 or p < 0:
         raise ValueError
-    return 1 if random.random() < p else 0 
+    if p <= 0.5:
+        return 0 if random.random() <= p else 1
+    if p > 0.5:
+        return 0 if random.random() < p else 1
 
 
 def one_round(input_p, matrix):
