@@ -30,7 +30,7 @@ const int area_score_numbers_x2 = 128;
 const int area_score_numbers_y1 = 9;
 const int area_score_numbers_y2 = 25;
 
-const int area_effect_numbers_x1 = 92;
+const int area_effect_numbers_x1 = 90;
 const int area_effect_numbers_x2 = 128;
 const int area_effect_numbers_y1 = 39;
 const int area_effect_numbers_y2 = 64;
