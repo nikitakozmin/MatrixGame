@@ -9,6 +9,9 @@ int random_binary(float p) {
     else if (p < 0.0) {
       p = 0.0;
     }
+    if (p <= 0.5) {
+        return (random(100) / 100.0) <= p ? 0 : 1;
+    }
     return (random(100) / 100.0) < p ? 0 : 1;
 }
 
