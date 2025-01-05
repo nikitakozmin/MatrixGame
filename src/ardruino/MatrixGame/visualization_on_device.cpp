@@ -38,9 +38,9 @@ void visualization_matrix(int matrix[2][2]){
   myOLED.setFont(BigNumbers);
   // числа первого столбца
   myOLED.printNumI(matrix[0][0], LEFT, number_first_row_y);
-  myOLED.printNumI(matrix[0][1], LEFT, number_second_row_y);
+  myOLED.printNumI(matrix[1][0], LEFT, number_second_row_y);
   // числа второго столбца
-  myOLED.printNumI(matrix[1][0], number_second_col_x, number_second_row_y);
+  myOLED.printNumI(matrix[0][1], number_second_col_x, number_second_row_y);
   myOLED.printNumI(matrix[1][1], number_second_col_x, number_first_row_y);
 }
 
