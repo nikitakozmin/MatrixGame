@@ -21,7 +21,7 @@ def create_matrix_with_saddle_point(rows=2, cols=2, min_num=-99, max_num=99):
 
 
 def create_matrix_for_game(rows=2, cols=2, min_num=-99, max_num=99):
-    """Создание матрицы, в которой седловых точек не больше одной"""
+    """Создание матрицы, в которой седловых точек не больше одной (если она есть)"""
     row_values = [set() for _ in range(rows)]
     col_values = [set() for _ in range(cols)]
     matrix = [[0 for _ in range(cols)] for  _ in range(rows)]
