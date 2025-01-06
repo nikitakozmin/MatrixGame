@@ -1,7 +1,7 @@
 import random
 
 
-# Создание матрицы с гарантированной седловой точкой
+# Создание матрицы с гарантированной седловой точкой - данная функция является тестовой и не используется в макете на Arduino
 def create_matrix_with_saddle_point(rows=2, cols=2, min_num=-99, max_num=99):
     # Создаём случайную матрицу
     matrix = [[random.randint(min_num, max_num) for i in range(cols)] for i in range(rows)]
