@@ -7,7 +7,6 @@
 Проект, созданный по реальному макету Ardruino с помощью эмулятора Wokwi (уже собран)
 
 ![Макет Ardruino](layout.jpg)
-(На фото не актуальная анимация)
 
 ## Ресурсы (src)
 ### :card_index_dividers: src/ardruino/MatrixGame
