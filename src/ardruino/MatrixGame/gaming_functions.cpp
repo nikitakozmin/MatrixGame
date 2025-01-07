@@ -1,28 +1,6 @@
 #include <Arduino.h>
 #include "gaming_functions.h"
 
-// Функция для генерации случайного бинарного числа на основе вероятности p
-int random_binary(float p) {
-    if (p > 1.0) {
-      p = 1.0;
-    }
-    else if (p < 0.0) {
-      p = 0.0;
-    }
-    if (p <= 0.5) {
-        return (random(100) / 100.0) <= p ? 0 : 1;
-    }
-    return (random(100) / 100.0) < p ? 0 : 1;
-}
-
-// Функция, которая возвращает сумму за раунд
-int one_round(float pA, float pB, int matrix[2][2]) {
-    int row = random_binary(pA);
-    int col = random_binary(pB);
-
-    return matrix[row][col];
-}
-
 // Функция для возведения 10 в степень без использования pow
 double scale_factor(int decimals) {
     double scale = 1.0;
@@ -59,46 +37,49 @@ Probabilities ideal_probabilities_for_mixed_strategy(int matrix[2][2]) {
 int probability_selection_efficiency(float fst_expected_value, float snd_expected_value, float fst_real_value, float snd_real_value) {
     return int((1 - abs(fst_expected_value - fst_real_value) + 1 - abs(snd_expected_value - snd_real_value)) / 2 * 100.0);
 }
-
-
-void create_matrix_for_game(int matrix[2][2], int rows = 2, int cols = 2, int min_num, int max_num) {
-    // Инициализация случайного генератора с использованием аналогового пина для генерации случайных чисел
-    randomSeed(analogRead(A0));
-    
-    // Массивы для отслеживания уникальных значений в строках и столбцах
-    bool rowValues[rows][max_num - min_num + 1]; // Массив для строк (максимальное количество уникальных значений)
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < max_num - min_num + 1; j++) {
-            rowValues[i][j] = false;
-        }
-    }
-
-    bool colValues[cols][max_num - min_num + 1];  // Массив для столбцов (максимальное количество уникальных значений)
-    for (int i = 0; i < cols; i++) {
-        for (int j = 0; j < max_num - min_num + 1; j++) {
-            colValues[i][j] = false;
-        }
-    }
-
-    // Перебор всех ячеек матрицы
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            int newValue;
-
-            // Генерация уникального значения для ячейки
-            do {
-                newValue = random(min_num, max_num + 1); // Случайное число от min_num до max_num
-            } while (rowValues[i][newValue - min_num] || colValues[j][newValue - min_num]);
-
-            // Заполнение матрицы новым значением
-            matrix[i][j] = newValue;
-    
-            // Обновление флагов для строк и столбцов
-            rowValues[i][newValue - min_num] = true;
-            colValues[j][newValue - min_num] = true;
-        }
-    }
+//ДОБАВИТЬ В H
+bool is_out_of_bounds(int matrix[2][2]){
+  Probabilities i_probabilities = ideal_probabilities_for_mixed_strategy(matrix);
+  return (0.1 > i_probabilities.q || i_probabilities.q > 0.9 || 0.1 > i_probabilities.p || i_probabilities.p > 0.9);
 }
+
+// Создание матрицы без седловой точки
+void create_matrix_with_no_saddle_point(int matrix[2][2], int max_num) {
+  randomSeed(analogRead(A0)); 
+  
+  int a11 = random(1, max_num + 1); 
+  int a22 = random(1, max_num + 1);
+  
+  int total_sum = a11 + a22;
+  int split, a12, a21;
+
+  if (total_sum > max_num) {
+    split = random(total_sum / 2, max_num + 1);
+  } else {
+    split = random(1, total_sum);
+  }
+
+  a12 = -split;
+  a21 = -(total_sum - split);
+
+  if (random(0, 2) == 0) {
+    matrix[0][0] = a11;
+    matrix[0][1] = a12;
+    matrix[1][0] = a21;
+    matrix[1][1] = a22;
+  } else {
+    // Transpose the matrix
+    matrix[0][0] = a21;
+    matrix[0][1] = a11;
+    matrix[1][0] = a22;
+    matrix[1][1] = a12;
+  }
+  int saddleRow, saddleCol, saddleValue;
+  while (findSaddlePoint(matrix, saddleRow, saddleCol, saddleValue)  == false || is_out_of_bounds(matrix)) {
+    create_matrix_with_no_saddle_point(matrix, max_num);
+  }
+}
+
 
 //функция для поиска седловой точки
 bool findSaddlePoint(int matrix[2][2], int& saddleRow, int& saddleCol, int& saddleValue) {
