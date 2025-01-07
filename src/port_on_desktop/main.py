@@ -1,22 +1,17 @@
 from matrix_generations import *
-from matrix_handler import *
 from game_process import *
-
 
 num_rows = 2
 num_cols = 2
-min_num_for_random = -99
 max_num_for_random = 99
 num_moves = 5
 
-
 def loop():
-    matrix = create_matrix_for_game(num_rows, num_cols, min_num_for_random, max_num_for_random)
+    matrix = create_matrix_with_no_saddle_point(num_rows, num_cols, max_num_for_random)
     print(*matrix, sep='\n')
     game_sum, total_effect = game_process(matrix, num_moves)
-    print("Total effect:", str(total_effect)+'%', "|", "Score:", game_sum)
+    print("Total effect:", str(round(total_effect, 2)) + '%', "|", "Score:", round(game_sum, 2))
     
 if __name__ == "__main__":
     while True:
         loop()
-    

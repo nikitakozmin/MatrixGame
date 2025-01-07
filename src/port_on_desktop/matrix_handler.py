@@ -15,17 +15,14 @@ def find_saddle_point(matrix):
 
     return None  # Если седловой точки нет
 
-
 def mate_expectation_of_game_matrix(matrix, q, p):
     return round(matrix[0][0] * p * q + matrix[0][1] * q * (1 - p) + matrix[1][0] * p * (1 - q) + matrix[1][1] * (1 - q) * (1 - p), 2)
-
 
 def ideal_probabilities_for_mixed_strategy(matrix):
     # Частные производные, найденные от мат ожидания
     q = (matrix[1][0] - matrix[1][1]) / (-matrix[0][0] + matrix[0][1] + matrix[1][0] - matrix[1][1]) # Идеальная вероятность для первого
     p = (matrix[0][1] - matrix[1][1])/(-matrix[0][0]+matrix[0][1]+matrix[1][0]-matrix[1][1])  # Идеальная вероятность для второго
     return round(q, 2), round(p, 2)
-
 
 def probability_selection_efficiency(fst_expected_value, snd_expected_value, fst_real_value, snd_real_value):
     return int(round((1-abs(fst_expected_value - fst_real_value) + 1-abs(snd_expected_value - snd_real_value)) / 2, 2)*100)
