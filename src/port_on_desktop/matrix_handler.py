@@ -29,3 +29,6 @@ def ideal_probabilities_for_mixed_strategy(matrix):
 
 def probability_selection_efficiency(fst_expected_value, snd_expected_value, fst_real_value, snd_real_value):
     return int(round((1-abs(fst_expected_value - fst_real_value) + 1-abs(snd_expected_value - snd_real_value)) / 2, 2)*100)
+
+def cost_of_the_game(matrix, p, q):
+    return round(matrix[1][1] * matrix[0][0] - matrix[1][0] * matrix[0][1]) / (matrix[0][0] + matrix[1][1] - matrix[1][0] - matrix[1][0], 2) # Цена игры
