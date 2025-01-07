@@ -3,20 +3,14 @@
 
 int matrix[2][2];
 
-int saddleRow;
-int saddleCol;
-int saddleValue;
-bool saddlePoint;
-
 void setup()
 {
   pinMode(A2, INPUT);
   pinMode(A7, INPUT);
   start_vis();
   initial_visualization(); // визуализируем стоблцы, строки и подписи
-  create_matrix_for_game(matrix); // создаем матрицу
+  create_matrix_with_no_saddle_point(matrix); // создаем матрицу
   visualization_matrix(matrix); // визуализируем матрицу
-  saddlePoint = findSaddlePoint(matrix, saddleRow, saddleCol, saddleValue);
   update_vis();
 }
 
@@ -24,7 +18,6 @@ int game_sum = 0; // игровой счет
 int total_effect = 0; // итоговый эффект
 int counter_steps = 0; // счетчик раундов
 int num_round = 5; // количество раундов
-
 
 // игровой процесс
 void game_process(){
@@ -37,21 +30,12 @@ void game_process(){
 
   float pA = analogRead(A2)/float(1024); // подаваемые вероятности с потенциометров
   float pB = analogRead(A7)/float(1024);
-  float ideal_row_probability = 0.0; // создаем переменные для идеальных вероятностей
-  float ideal_column_probability = 0.0;
+  Probabilities ideal_probabilities = ideal_probabilities_for_mixed_strategy(matrix);
+  float ideal_row_probability = ideal_probabilities.q;
+  float ideal_column_probability = ideal_probabilities.p;
   
   // счет
-  game_sum = game_sum + one_round(pA, pB, matrix);
-  
-  //задаем значения которые должны были получится для идеальной стратегии
-  if(saddlePoint){
-    ideal_row_probability = saddleRow;
-    ideal_column_probability = saddleCol;
-  }else{
-    Probabilities ideal_probabilities = ideal_probabilities_for_mixed_strategy(matrix);
-    ideal_row_probability = ideal_probabilities.q;
-    ideal_column_probability = ideal_probabilities.p;
-  }
+  game_sum = game_sum + round(mate_expectation_of_game_matrix(matrix, pA, pB));
 
   int effect = probability_selection_efficiency(ideal_row_probability, ideal_column_probability, pA, pB);// эффект
   total_effect = total_effect + effect;// итоговый эффект

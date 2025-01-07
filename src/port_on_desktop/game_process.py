@@ -11,8 +11,7 @@ def game_process(matrix, num_moves=3):
     effect = 0
 
     ideal_row_probability, ideal_column_probability = ideal_probabilities_for_mixed_strategy(matrix)
-    ideal_expectation_of_game_matrix = mate_expectation_of_game_matrix(matrix, ideal_row_probability, ideal_column_probability)
-    
+   
     for _ in range(num_moves):
         fst_row_probability, fst_column_probability, *_ = [
             float(i) for i in input("Enter two probabilities separated by a space: ").strip().split()
