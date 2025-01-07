@@ -24,5 +24,5 @@ def ideal_probabilities_for_mixed_strategy(matrix):
     p = (matrix[0][1] - matrix[1][1])/(-matrix[0][0]+matrix[0][1]+matrix[1][0]-matrix[1][1])  # Идеальная вероятность для второго
     return round(q, 2), round(p, 2)
 
-def probability_selection_efficiency(game_sum, ideal_expectation, latest_efficiency):
-    return round((game_sum - ideal_expectation)/abs(ideal_expectation) * 100, 2) - latest_efficiency
+def probability_selection_efficiency(fst_expected_value, snd_expected_value, fst_real_value, snd_real_value):
+    return int(round((1-abs(fst_expected_value - fst_real_value) + 1-abs(snd_expected_value - snd_real_value)) / 2, 2)*100)

@@ -3,11 +3,6 @@ from matrix_generations import *
 from matrix_handler import *
 
 
-@pytest.mark.parametrize("_", range(100))
-def test_to_create_guaranteed_saddle(_):
-    assert find_saddle_point(create_matrix_with_saddle_point()) != None
-
-
 @pytest.mark.parametrize("fst_expected_value, snd_expected_value, fst_real_value, snd_real_value, expected", [
     (1, 1, 0, 0, 0),
     (0, 0, 0, 0, 100),

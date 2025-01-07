@@ -18,9 +18,11 @@ def game_process(matrix, num_moves=3):
             float(i) for i in input("Enter two probabilities separated by a space: ").strip().split()
         ]
 
-        game_sum += round(mate_expectation_of_game_matrix(matrix, fst_row_probability, fst_column_probability), 2)
+        game_sum += round(mate_expectation_of_game_matrix(matrix, fst_row_probability, fst_column_probability))
 
-        effect = probability_selection_efficiency(game_sum, ideal_expectation_of_game_matrix, effect)
+        effect = probability_selection_efficiency(
+            ideal_row_probability, ideal_column_probability, fst_row_probability, fst_column_probability
+        )
         
         print("Effect:", str(round(effect, 2))+'%', "|", "Score:", round(game_sum, 2))
 

@@ -3,8 +3,7 @@ from game_process import *
 
 num_rows = 2
 num_cols = 2
-min_num_for_random = -100
-max_num_for_random = 100
+max_num_for_random = 99
 num_moves = 5
 
 def loop():
