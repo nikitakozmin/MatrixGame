@@ -37,7 +37,7 @@ Probabilities ideal_probabilities_for_mixed_strategy(int matrix[2][2]) {
 int probability_selection_efficiency(float fst_expected_value, float snd_expected_value, float fst_real_value, float snd_real_value) {
     return int((1 - abs(fst_expected_value - fst_real_value) + 1 - abs(snd_expected_value - snd_real_value)) / 2 * 100.0);
 }
-//ДОБАВИТЬ В H
+
 bool is_out_of_bounds(int matrix[2][2]){
   Probabilities i_probabilities = ideal_probabilities_for_mixed_strategy(matrix);
   return (0.1 > i_probabilities.q || i_probabilities.q > 0.9 || 0.1 > i_probabilities.p || i_probabilities.p > 0.9);
@@ -68,14 +68,14 @@ void create_matrix_with_no_saddle_point(int matrix[2][2], int max_num) {
     matrix[1][0] = a21;
     matrix[1][1] = a22;
   } else {
-    // Transpose the matrix
+    // Транспонируем, чтобы возникали случаи с положительными числами на побочной диагонали
     matrix[0][0] = a21;
     matrix[0][1] = a11;
     matrix[1][0] = a22;
     matrix[1][1] = a12;
   }
   int saddleRow, saddleCol, saddleValue;
-  while (findSaddlePoint(matrix, saddleRow, saddleCol, saddleValue)  == false || is_out_of_bounds(matrix)) {
+  while (findSaddlePoint(matrix, saddleRow, saddleCol, saddleValue) == true || is_out_of_bounds(matrix)) {
     create_matrix_with_no_saddle_point(matrix, max_num);
   }
 }
@@ -90,7 +90,7 @@ bool findSaddlePoint(int matrix[2][2], int& saddleRow, int& saddleCol, int& sadd
   int colMax = -1000;
   // Находим минимальный элемент в строке
   for (int i = 0; i < rows; i++){
-    for (int j = 1; j < cols; j++){
+    for (int j = 0; j < cols; j++){
       if (matrix[i][j] < rowMin){
         rowMin = matrix[i][j];
         colIdx = j;
