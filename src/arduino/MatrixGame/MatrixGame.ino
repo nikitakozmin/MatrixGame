@@ -18,10 +18,11 @@ int game_sum = 0; // игровой счет
 int total_effect = 0; // итоговый эффект
 int counter_steps = 0; // счетчик раундов
 int num_round = 5; // количество раундов
+int timer = 5; // дефолт задержка 5 с 
 
 // игровой процесс
 void game_process(){
-  delay(5000); // задержка 5 секунд
+  delay(timer * 1000); // задержка в мс
   
   if (counter_steps == num_round){
     total_effect = total_effect/num_round;
